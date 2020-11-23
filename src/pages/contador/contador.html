@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>contador</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content style="margin-top: 20px;" >
+  <ion-list>
+    <ion-item-sliding *ngFor="let item of cart.items;let i = index">
+      <ion-item>
+        <ion-thumbnail item-start navPush="ProductDetail" [navParams]="{product: item.id}">
+          <img src="../../assets/imgs/sem-foto.jpg">
+        </ion-thumbnail>
+        <h2 [innerHTML]="item.nome"></h2>
+        
+        
+        <p style="color: rgb(13, 22, 104); font-weight: 600;" item-end *ngIf="item.valor >= ''">{{item.total | currency: 'BRL'}}</p>
+
+        <ion-icon class="noBackSpace"  color="danger" slot="start" name="md-remove-circle" (click)="contarMenos(item.id)"></ion-icon>
+        
+        <p class="noBackSpace">{{item.cont}}</p>
+        <ion-icon  color="secondary" slot="start" name="md-add-circle" (click)="contarMais(item.id)"></ion-icon>
+        <p style="color: rgb(6, 117, 15);" *ngIf="item.total != ''" >Valor UNI: {{item.valor | currency: 'BRL'}}</p>
+        
+      </ion-item>
+    
+      <ion-item-options side="right">
+        <button ion-button color="primary" (click)="removeItem(index)">
+          <ion-icon name="trash"></ion-icon>
+          Excluir
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+    <ion-item>
+      <p item-end *ngIf="somaTotal2  == ''"><ion-badge color="danger" mode="ios">Total: {{cart.total | currency: 'BRL'}}</ion-badge></p>
+      <p item-end *ngIf="somaTotal2  != ''"><ion-badge color="danger" mode="ios">Total: {{somaTotal2 | currency: 'BRL'}}</ion-badge></p>
+    </ion-item>
+    
+  </ion-list>
+  <button ion-button color="primary" full (click)="finalizar()">Checkout</button>
+</ion-content>
+
+

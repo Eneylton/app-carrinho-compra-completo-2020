@@ -1,0 +1,112 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Peças e Acessórios</ion-title>
+
+    <ion-searchbar placeholder="Pesquisar" *ngIf="isSearchbarOpened" showCancelButton="true" 
+                   (ionCancel)="isSearchbarOpened=false"
+                   (ionInput)="getProdutos($event)">
+                   </ion-searchbar>
+    <ion-buttons end>
+
+      <button ion-button icon-only *ngIf="!isSearchbarOpened" (click)="isSearchbarOpened=true">
+
+        <ion-icon name="search"></ion-icon>
+      </button>
+
+      <button ion-button icon-only clear navPush="ContadorPage">
+        <ion-icon name="basket"></ion-icon>
+        <ion-badge color="danger">{{cart.items.length}}</ion-badge> 
+    </button>
+    </ion-buttons>
+
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-fab bottom right >
+    <button color="danger" ion-fab mini (click)="adicionar()">
+      <ion-icon color="ligh" name="add"></ion-icon>
+    </button>
+
+  </ion-fab>
+
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
+      refreshingText="Atualizando...">
+
+    </ion-refresher-content>
+
+  </ion-refresher>
+
+
+  <ion-list style="margin-top: 20px;" >
+    <ion-item-sliding *ngFor="let item Of produtos " >
+     
+       
+          <ion-item>
+            <ion-avatar item-start>
+              <img src="../../assets/imgs/sem-foto.jpg">
+            </ion-avatar>
+         
+            <h2 class="texto01">{{item.nome}}</h2>
+            <p item-end class="texto02">{{item.valor | currency: 'BRL'}} </p><ion-icon item-end name="ios-arrow-forward"></ion-icon>
+            <button ion-button small (click)="addItem(item)">
+              Adicionar
+            </button>
+            <p>
+              <ion-badge item-end color="secondary">Quantidade: {{item.qtd}}</ion-badge>
+            </p>
+          </ion-item>
+      
+      
+  
+
+      <ion-item-options side="left">
+
+        <button ion-button color="light" (click)="conta(item.id,
+                                                        item.valor,
+                                                        item.nome,
+                                                        item.cont,
+                                                        item.qtd
+                                                        )">
+          <ion-icon name="contact" ></ion-icon> Minha Conta
+        </button>
+
+      </ion-item-options>
+
+      <ion-item-options side="right">
+
+
+        <button ion-button color="dark" (click)="editar(item.id,
+                                                        item.valor,
+                                                        item.nome,
+                                                        item.qtd
+                                                        
+                                                        )">
+          <ion-icon name="brush" ></ion-icon> 
+        </button>
+
+
+        <button ion-button color="danger" (click)="delete(item.id)" >
+          <ion-icon name="trash" ></ion-icon> 
+        </button>
+
+      </ion-item-options>
+
+
+    </ion-item-sliding>
+  </ion-list>
+
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="CARREGANDO...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+
+</ion-content>

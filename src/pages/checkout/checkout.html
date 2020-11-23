@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-navbar>
+
+    <span class="texto03"> Checkout </span>
+    <ion-buttons end>
+
+      <button ion-button icon-only>
+        <ion-icon name="calendar"></ion-icon>
+        <span style="color: chartreuse;"> {{dataFormat | date: 'dd/MM/yyyy'}}  </span>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content style="margin-top: 20px;">
+
+  <ion-item *ngFor="let item Of pedidos; let i = index">
+
+    <h2 style="font-weight:600;">
+      {{i +1}} - {{item.nome}}
+    </h2>
+    <h3 item-end class="texto01"> {{item.valor | currency: 'BRL'}}</h3>
+    <p>Quantidade:{{item.qtd}}</p>
+  
+
+  </ion-item>
+
+  <ion-item>
+
+    <p item-start style="font-size: medium; color: rgb(5, 119, 21);">Total de Produtos: {{totalPR}} </p>
+    <p item-end class="texto02">Total: {{totalAB | currency: 'BRL'}} </p>
+
+
+  </ion-item>
+  <button ion-button color="primary" block (click)="finalizar()">Finalizar Pedidos</button>
+
+</ion-content>

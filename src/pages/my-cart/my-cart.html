@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Minhas Compras</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content >
+  <ion-list>
+    <ion-item-sliding *ngFor="let item of cart.items;let i = index">
+      <ion-item>
+        <ion-thumbnail item-start navPush="ProductDetail" [navParams]="{product: item.id}">
+          <img src="../../assets/imgs/sem-foto.jpg">
+        </ion-thumbnail>
+        <h2 [innerHTML]="item.nome"></h2>
+        <p>{{item.valor | currency: 'BRL'}}</p>
+        
+      </ion-item>
+    
+      <ion-item-options side="right">
+        <button ion-button color="primary" (click)="removeItem(index)">
+          <ion-icon name="trash"></ion-icon>
+          Excluir
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+    <ion-item>
+      <p item-end><ion-badge color="danger" mode="ios">Total: {{cart.total | currency: 'BRL'}}</ion-badge></p>
+    </ion-item>
+    
+  </ion-list>
+  <button ion-button color="primary" full navPush="CheckoutPage">Pagar</button>
+</ion-content>
+
